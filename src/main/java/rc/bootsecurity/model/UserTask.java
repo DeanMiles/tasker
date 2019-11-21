@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 //@Table(name = "Tasks")
@@ -28,12 +29,17 @@ public class UserTask {
         return id;
     }
 
-    public List<String> getPermissionList() {
+    public List<Long> getOwnersList() {
         if (this.ownerIds.length() > 0) {
-            return Arrays.asList(this.ownerIds.split(","));
+            return Arrays.asList(this.ownerIds.split(",")).stream().map(Long::parseLong).collect(Collectors.toList());
         } else {
             return new ArrayList<>();
         }
+    }
+
+    public boolean isOwner(Long id) {
+        List<Long> longList = getOwnersList();
+        return longList.contains(id);
     }
 
     public String getTaskName() {

@@ -56,7 +56,6 @@ public class ApiController {
     //USERS//
     @GetMapping("users")
     public List<User> allUsers() {
-
         return this.userRepository.findAll();
     }
 

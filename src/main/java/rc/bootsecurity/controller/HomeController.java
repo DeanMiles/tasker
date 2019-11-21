@@ -28,6 +28,11 @@ public class HomeController {
         return "login";
     }
 
+    @GetMapping("tasks")
+    public String tasks() {
+        return "tasks";
+    }
+
     @GetMapping("register")
     public String showRegister(Model model) {
         model.addAttribute("user", new User());

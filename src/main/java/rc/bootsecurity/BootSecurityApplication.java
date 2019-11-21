@@ -38,7 +38,7 @@ public class BootSecurityApplication {
         Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
         connector.setScheme("http");
         connector.setPort(8080);
-        connector.setSecure(false);
+        connector.setSecure(true);
         connector.setRedirectPort(8443);
         return connector;
     }

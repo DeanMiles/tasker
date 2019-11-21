@@ -20,6 +20,9 @@
                     <a class="nav-link" href="#" th:href="@{~/index}"><i class="fa fa-home"></i>Home</a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{~/tasks}">Tasks</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
                     <a class="nav-link" href="#" th:href="@{~/profile/index}">Profile</a>
                 </li>
                 <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
@@ -34,7 +37,7 @@
 <!--                <button sec:authorize="isAnonymous()" th:href="@{~/login}" form-method="get" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">Login</button>-->
 <!--                <button sec:authorize="isAnonymous()" th:href="@{~/register}" form-method="get" class="btn btn-outline-info ny-2 my-sm-0 btn-sm" type="submit">Register</button>-->
 <!--            </form>-->
-            <ul class="navbar-nav mr-auto my-2 my-lg-0">
+            <ul class="navbar-nav navbar-right">
                 <li class="nav-item" sec:authorize="isAnonymous()">
                     <a class="btn btn-outline-info my-2 my-sm-0 btn-sm" href="#" th:href="@{~/login}">Login</a>
                 </li>
