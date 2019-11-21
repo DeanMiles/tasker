@@ -1,15 +1,22 @@
 package rc.bootsecurity.controller;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import rc.bootsecurity.db.UserRepository;
 import rc.bootsecurity.model.User;
-
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
+    private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
+
+    public HomeController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @GetMapping("index")
     public String index() {
@@ -29,8 +36,14 @@ public class HomeController {
 
     @PostMapping("register")
     public String processRegister(@ModelAttribute User user) {
-
-        return "result";
+        User existing = userRepository.findByUsername(user.getUsername());
+        if (existing != null) {
+            return "register";
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(user);
+            return "result";
+        }
 
     }
 }

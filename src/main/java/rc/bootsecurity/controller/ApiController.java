@@ -53,18 +53,6 @@ public class ApiController {
         return userRepository.findAll();
     }
 
-    //REGISTER//
-    @RequestMapping(value = "register", method = RequestMethod.POST)
-    public void processRegister(@Valid User user, BindingResult bindingResult, HttpServletRequest request) {
-        User userExists = userRepository.findByUsername(user.getUsername());
-
-        if (userExists != null) {
-            System.out.println("Istnieje taki");
-        } else {
-            userRepository.save(user);
-        }
-    }
-
     //USERS//
     @GetMapping("users")
     public List<User> allUsers() {

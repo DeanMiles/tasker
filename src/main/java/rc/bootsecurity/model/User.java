@@ -21,7 +21,6 @@ public class User {
 
 
     @Column(name = "password",nullable = false)
-    @Transient
     private String password;
 
     public User () {
