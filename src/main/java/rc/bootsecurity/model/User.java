@@ -1,53 +1,48 @@
 package rc.bootsecurity.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Entity
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private long id;
 
-    @Column(nullable = false)
+    @Column(name = "user_name", nullable = false)
+    @NotEmpty(message = "Provide your login")
     private String username;
 
-    public long getId() {
-        return id;
+
+    @Column(name = "password",nullable = false)
+    @Transient
+    private String password;
+
+    public User () {
+        this("", "");
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
+    private String tasks;
+    private String roles = "";
+    private String permissions = "";
+    private int active = 1;
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public int getActive() {
-        return active;
-    }
-
-    public void setActive(int active) {
-        this.active = active;
-    }
-
-    public String getRoles() {
-        return roles;
+    public void setTasks(String tasks) {
+        this.tasks = tasks;
     }
 
     public void setRoles(String roles) {
@@ -62,25 +57,51 @@ public class User {
         this.permissions = permissions;
     }
 
-    @Column(nullable = false)
-    private String password;
+    public void setActive(int active) {
+        this.active = active;
+    }
 
-    private int active;
+    public long getId() {
+        return id;
+    }
 
-    private String roles = "";
+    public String getUsername() {
+        return username;
+    }
 
-    private String permissions = "";
+    public String getPassword() {
+        return password;
+    }
+
+    public String getTasks() {
+        return tasks;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.roles = "USER";
+        this.permissions = "";
+    }
 
     public User(String username, String password, String roles, String permissions) {
         this.username = username;
         this.password = password;
         this.roles = roles;
         this.permissions = permissions;
-        this.active = 1;
     }
 
-    protected User() {
 
+    public List<String> getPermissionList() {
+        if (this.permissions.length() > 0) {
+            return Arrays.asList(this.permissions.split(","));
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     public List<String> getRoleList() {
@@ -91,11 +112,7 @@ public class User {
         }
     }
 
-    public List<String> getPermissionList() {
-        if (this.permissions.length() > 0) {
-            return Arrays.asList(this.permissions.split(","));
-        } else {
-            return new ArrayList<>();
-        }
+    public int getActive() {
+        return active;
     }
 }

@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles">
+    <title>Register</title>
+</head>
+<body>
+    <div class="container">
+        <div style="width:600px;margin-left: auto;margin-right: auto;margin-top:24px;padding: 24px;">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-user"></i> Registration
+                </div>
+                <div class="card-block" style="padding: 24px;">
+                    <form action="#" name="f" th:action="@{/register}" th:object="${user}" method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" th:field="*{username}"
+                                       placeholder="Username">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtPassword">Password</label>
+                                <input type="password" class="form-control" id="txtPassword" th:field="*{password}"
+                                       placeholder="Password">
+                            </div>
+
+<!-- Tutaj zrób druga rubryke powtorz haslo ktora bedzie na biezaco sprawdzala czy oba hasla sa podobne
+checkbox do akceptacji regulaminu bez ktorego nie przejdzie dalej tylko wyjebie errora i rubryke na maila ktora bedzie sprawdzala
+na biezaco czy mail jest poprawnego formatu nizej masz gotowego checkboxa ale dorob skrypty-->
+
+
+<!--                            <div class="form-check">-->
+<!--                                <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">-->
+<!--                                <label class="form-check-label" for="remember-me">Remember me?</label>-->
+<!--                            </div>-->
+                            <div class="form-actions" style="margin-top: 12px;">
+                                <button type="submit" class="btn btn-success">Register</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</form>
+</body>
+</html>
