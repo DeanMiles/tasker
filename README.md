@@ -10,3 +10,4 @@ są w pliku
 
 
 logujecie sie admin:admin jak chcecie zobaczyc jak to smiga
+odpalacie uruchamiając /src/main/java/rc.bootsecurity/BootSecurityApplication
