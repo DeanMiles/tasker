@@ -1,21 +1,14 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-
-<!--    <script type="text/javascript" src="/static/angular.min.js" th:src="@{/angular.min.js}"></script>-->
-    <script type="text/javascript" src="/static/angular.min.js" th:src="@{/angular.min.js}"></script>
-    <script type="text/javascript" src="/static/app/app.module.js" th:src="@{/static/app/app.module.js}"></script>
-    <script type="text/javascript" src="/static/app/task.controller.js" th:src="@{/static/app/task.controller.js}"></script>
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles">
 </head>
 <body ng-app="app" ng-controller="TaskController as vm">
-<header th:insert="fragments.html :: nav"></header>
-<header>
+<header th:insert="fragments.html :: nav">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Your tasks</a>
+                <a class="navbar-brand" href="#">Tasks</a>
             </div>
-<!--            <p class="navbar-text navbar-right" th:text="'Signed in as ' + ${username}" style="margin-right: 10px;">Signed in as Anonymus</p>-->
         </div>
     </nav>
 </header>
@@ -26,7 +19,7 @@
             <!-- Get all bookings or only affordable ones -->
             <div class="btn-group" role="group">
                 <button ng-click="vm.getAll()" type="button" class="btn btn-default">All</button>
-<!--                <button ng-click="vm.getAffordable()" type="button" class="btn btn-default">Less than 100$</button>-->
+
             </div>
 
             <!-- Display bookings in a table -->
@@ -35,8 +28,8 @@
                 <tr>
                     <th>Title</th>
                     <th>ID</th>
-                    <th>Start time</th>
-                    <th>End time</th>
+                    <th>Start</th>
+                    <th>End</th>
                     <th style="width: 90px"></th>
                 </tr>
                 </thead>
@@ -46,9 +39,6 @@
                     <td>{{task.id}}</td>
                     <td>{{task.startDate}}</td>
                     <td>{{task.endDate}}</td>
-<!--                    <td>-->
-<!--                        <button class="btn btn-danger" ng-click="vm.deleteBooking(booking.id)">Delete</button>-->
-<!--                    </td>-->
                 </tr>
                 </tbody>
             </table>
