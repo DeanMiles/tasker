@@ -66,12 +66,12 @@ public class UserTask {
         this.endDate = endDate;
     }
 
-    public boolean isDone() {
+    public boolean getIsDone() {
         return isDone;
     }
 
-    public void setDone(boolean done) {
-        isDone = done;
+    public void setIsDone(boolean isDone) {
+        this.isDone = isDone;
     }
 
     public UserTask(String taskName, String ownerIds, LocalDate startDate, LocalDate endDate) {
@@ -85,6 +85,5 @@ public class UserTask {
 
     }
 
-//    @Column(name = "IsDone")
     private boolean isDone = false;
 }

@@ -33,6 +33,11 @@ public class HomeController {
         return "tasks";
     }
 
+    @GetMapping("profile")
+    public String profile() {
+        return "profile/index";
+    }
+
     @GetMapping("register")
     public String showRegister(Model model) {
         model.addAttribute("user", new User());

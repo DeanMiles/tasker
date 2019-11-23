@@ -7,4 +7,5 @@ import rc.bootsecurity.model.UserTask;
 @Repository
 public interface TaskRepository extends JpaRepository<UserTask, Long> {
     UserTask findById(long id);
+    UserTask findByIsDoneTrue();
 }
