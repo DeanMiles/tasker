@@ -94,6 +94,19 @@ public class UserTask {
         ownerIds += String.valueOf(id);
     }
 
+    public void deleteOwner(long id) {
+        List<Long> list = getOwnersList();
+        if (list.contains(id)) {
+            list.remove(id);
+            String string = "";
+            for (Long i : list) {
+                string += String.valueOf(id);
+                string += ",";
+            }
+            ownerIds = string;
+        }
+    }
+
     public UserTask(String taskName, String ownerIds) {
         this.taskName = taskName;
         this.ownerIds = ownerIds;

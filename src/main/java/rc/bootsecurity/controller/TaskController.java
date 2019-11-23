@@ -133,4 +133,14 @@ public class TaskController {
         }
         return new ArrayList<>();
     }
+
+    @PostMapping("deleteOwner/{taskid}")
+    public List<UserTask> deleteOwner(@PathVariable long taskid) {
+        UserTask userTask = taskRepository.findById(taskid);
+        if (userTask != null) {
+            userTask.deleteOwner(3);
+            taskRepository.save(userTask);
+        }
+        return new ArrayList<>();
+    }
 }
