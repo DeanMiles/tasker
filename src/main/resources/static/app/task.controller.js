@@ -17,6 +17,7 @@
         vm.toggledone = toggledone;
         vm.deleteTask = deleteTask;
 
+
         init();
 
         function init(){
@@ -24,14 +25,14 @@
         }
 
         function getUnDone() {
-            var url = "/tasks/myundone";
+            var url = "/tasks/showUnDoneOnly";
             $http.get(url).then(function (response) {
                 vm.tasks = response.data;
             });
         }
 
         function getDone() {
-            var url = "/tasks/mydone";
+            var url = "/tasks/showDoneOnly";
             $http.get(url).then(function (response) {
                vm.tasks = response.data;
             });
@@ -45,7 +46,7 @@
         }
         
         function toggledone(id) {
-            var url = "/tasks/toggledone/" + id;
+            var url = "/tasks/toggleDone/" + id;
             $http.post(url).then(function (response) {
                vm.tasks = response.data;
             });

@@ -10,6 +10,7 @@ import rc.bootsecurity.db.UserRepository;
 import rc.bootsecurity.model.User;
 import rc.bootsecurity.model.UserTask;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,15 +72,22 @@ public class TaskController {
         return getMyTasks().stream().filter(x -> !x.getIsDone()).collect(Collectors.toList());
     }
 
-    @PostMapping("delete/{id}")
-    public List<UserTask> delete(@PathVariable long id) {
-        this.taskRepository.delete(taskRepository.findById(id));
-        return taskRepository.findAll();
+    @PostMapping("adminDelete/{id}")
+    public List<UserTask> ADMIN_delete(@PathVariable long id) {
+        UserTask userTask = taskRepository.findById(id);
+        if (userTask != null) {
+            taskRepository.delete(userTask);
+        }
+        return getAll();
     }
 
-    @PostMapping("mydelete/{id}")
-    public List<UserTask> myDelete(@PathVariable long id) {
-        this.taskRepository.delete(taskRepository.findById(id));
+    @PostMapping("delete/{id}")
+    public List<UserTask> delete(@PathVariable long id) {
+        UserTask userTask = taskRepository.findById(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (userTask != null && userTask.isOwner(userRepository.findByUsername(authentication.getName()).getId())) {
+            taskRepository.delete(userTask);
+        }
         return getMyTasks();
     }
 
@@ -96,6 +104,33 @@ public class TaskController {
     @GetMapping("mytasks")
     public List<UserTask> getMyTasks() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return taskRepository.findAll().stream().filter(x -> x.isOwner(userRepository.findByUsername(authentication.getName()).getId())).collect(Collectors.toList());
+        if (!authentication.getName().equalsIgnoreCase("anonymousUser")) {
+            return taskRepository.findAll().stream().filter(x -> x.isOwner(userRepository.findByUsername(authentication.getName()).getId())).collect(Collectors.toList());
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    @PostMapping("newtask")
+    public List<UserTask> addTask(@RequestParam String title) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!authentication.getName().equalsIgnoreCase("anonymousUser")) {
+            UserTask userTask = new UserTask(title, String.valueOf(userRepository.findByUsername(authentication.getName()).getId()));
+            taskRepository.save(userTask);
+            return getMyTasks();
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    @PostMapping("addOwner/{taskid}")
+    public List<UserTask> addOwner(@PathVariable long taskid) {
+//        User user = userRepository.findById(userid);
+        UserTask userTask = taskRepository.findById(taskid);
+        if (/*user != null && */userTask != null) {
+            userTask.addOwner(3);
+            taskRepository.save(userTask);
+        }
+        return new ArrayList<>();
     }
 }

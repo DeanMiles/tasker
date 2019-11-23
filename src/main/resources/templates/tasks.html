@@ -56,6 +56,28 @@
                 </tr>
                 </tbody>
             </table>
+            <form name="newTask" th:action="@{/tasks/newtask}" method="post">
+                <fieldset>
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" name="title"
+                               placeholder="Title">
+                    </div>
+<!--                    <div class="form-group">-->
+<!--                        <label for="NewPassword">New password</label>-->
+<!--                        <input type="text" class="form-control" id="newPassword" name="newPassword"-->
+<!--                               placeholder="New password">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="newPassword2">Confirm new password</label>-->
+<!--                        <input type="text" class="form-control" id="newPassword2" name="newPassword2"-->
+<!--                               placeholder="Confirm new password">-->
+<!--                    </div>-->
+                    <div class="form-actions" style="margin-top: 12px;">
+                        <button type="submit" class="btn btn-success">Add task!</button>
+                    </div>
+                </fieldset>
+            </form>
 
         </div>
     </div>

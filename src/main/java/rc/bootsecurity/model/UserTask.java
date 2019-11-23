@@ -89,5 +89,17 @@ public class UserTask {
 
     }
 
+    public void addOwner(long id) {
+        ownerIds += ",";
+        ownerIds += String.valueOf(id);
+    }
+
+    public UserTask(String taskName, String ownerIds) {
+        this.taskName = taskName;
+        this.ownerIds = ownerIds;
+        this.startDate = LocalDate.now();
+        this.endDate = LocalDate.now();
+    }
+
     private boolean isDone = false;
 }
