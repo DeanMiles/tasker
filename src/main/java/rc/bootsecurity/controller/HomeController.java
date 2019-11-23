@@ -45,9 +45,9 @@ public class HomeController {
     }
 
     @PostMapping("register")
-    public String processRegister(@ModelAttribute User user) {
+    public String processRegister(@ModelAttribute User user, @RequestParam String confirmPassword) {
         User existing = userRepository.findByUsername(user.getUsername());
-        if (existing != null) {
+        if (existing != null || !user.getPassword().equalsIgnoreCase(confirmPassword)) {
             return "register";
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));

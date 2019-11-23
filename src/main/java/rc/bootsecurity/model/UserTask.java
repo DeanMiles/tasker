@@ -18,7 +18,11 @@ public class UserTask {
     @Column(nullable = false)
     private String taskName;
 
-//    @Column(name = "Owners' ids")
+    public String getOwnerIds() {
+        return ownerIds;
+    }
+
+    //    @Column(name = "Owners' ids")
     private String ownerIds;
 //    @Column(name = "StartDate")
     private LocalDate startDate;

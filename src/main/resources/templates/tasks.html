@@ -32,6 +32,7 @@
                     <th>Start</th>
                     <th>End</th>
                     <th>Done?</th>
+                    <th>Owners</th>
                     <th style="width: 90px"></th>
                 </tr>
                 </thead>
@@ -42,15 +43,16 @@
                     <td>{{task.startDate}}</td>
                     <td>{{task.endDate}}</td>
                     <td>{{task.isDone}}</td>
+                    <td>{{task.ownerIds}}</td>
                     <td>
                         <button class="btn btn-danger" ng-click="vm.toggledone(task.id)">Toggle</button>
                     </td>
                     <td>
                         <button class="btn btn-danger" ng-click="vm.deleteTask(task.id)">Delete</button>
                     </td>
-                    <td>
-                        <button class="btn btn-danger" ng-click="vm.deleteTask(task.id)">Delete</button>
-                    </td>
+<!--                    <td>-->
+<!--                        <button class="btn btn-danger" ng-click="vm.deleteTask(task.id)">Delete</button>-->
+<!--                    </td>-->
                 </tr>
                 </tbody>
             </table>

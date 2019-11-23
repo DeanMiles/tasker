@@ -24,14 +24,14 @@
         }
 
         function getUnDone() {
-            var url = "/tasks/undone";
+            var url = "/tasks/myundone";
             $http.get(url).then(function (response) {
                 vm.tasks = response.data;
             });
         }
 
         function getDone() {
-            var url = "/tasks/done";
+            var url = "/tasks/mydone";
             $http.get(url).then(function (response) {
                vm.tasks = response.data;
             });
@@ -52,7 +52,7 @@
         }
 
         function getAll(){
-            var url = "/tasks/all";
+            var url = "/tasks/mytasks";
             var tasksPromise = $http.get(url);
             tasksPromise.then(function(response){
                 vm.tasks = response.data;
