@@ -90,7 +90,9 @@ public class UserTask {
     }
 
     public void addOwner(long id) {
-        ownerIds += ",";
+        if (ownerIds != null) {
+            ownerIds += ",";
+        }
         ownerIds += String.valueOf(id);
     }
 

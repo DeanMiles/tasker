@@ -3,16 +3,17 @@ package rc.bootsecurity.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import rc.bootsecurity.db.GroupRepository;
 import rc.bootsecurity.db.TaskRepository;
 import rc.bootsecurity.db.UserRepository;
+import rc.bootsecurity.model.Group;
 import rc.bootsecurity.model.User;
 import rc.bootsecurity.model.UserTask;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -20,11 +21,13 @@ import java.util.stream.Collectors;
 public class TaskController {
     private UserRepository userRepository;
     private TaskRepository taskRepository;
+    private GroupRepository groupRepository;
 
 
-    public TaskController(UserRepository userRepository, TaskRepository taskRepository) {
+    public TaskController(UserRepository userRepository, TaskRepository taskRepository, GroupRepository groupRepository) {
         this.userRepository = userRepository;
         this.taskRepository = taskRepository;
+        this.groupRepository = groupRepository;
     }
 
     @PostMapping("adminToggleDone/{id}")
@@ -106,10 +109,30 @@ public class TaskController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!authentication.getName().equalsIgnoreCase("anonymousUser")) {
             return taskRepository.findAll().stream().filter(x -> x.isOwner(userRepository.findByUsername(authentication.getName()).getId())).collect(Collectors.toList());
-        } else {
-            return new ArrayList<>();
         }
+        return new ArrayList<>();
     }
+
+//    @GetMapping("mytasks")
+//    public List<UserTask> getMyTasks() {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        User user = userRepository.findByUsername(authentication.getName());
+//        if (user != null) {
+//            List<UserTask> myTasks = taskRepository.findAll().stream().filter(x -> x.isOwner(user.getId())).collect(Collectors.toList());
+//            if (user.getGroups().length() > 0) {
+//                List<Group> groups = groupRepository.findAll().stream().filter(x -> x.isParticipant(user.getId())).collect(Collectors.toList());
+//                groups.forEach(x -> x.getTaskList().stream().forEach(y -> {
+//                    Optional<UserTask> tasks = taskRepository.findById(y);
+//                    if (!myTasks.contains(tasks.get())) {
+//                        myTasks.add(tasks.get());
+//                    }
+//                }));
+//            }
+//            return myTasks;
+//        } else {
+//            return new ArrayList<>();
+//        }
+//    }
 
     @PostMapping("newtask")
     public List<UserTask> addTask(@RequestParam String title) {

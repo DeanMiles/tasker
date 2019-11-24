@@ -1,15 +1,13 @@
 package rc.bootsecurity.controller;
 
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import rc.bootsecurity.db.GroupRepository;
 import rc.bootsecurity.db.TaskRepository;
 import rc.bootsecurity.db.UserRepository;
+import rc.bootsecurity.model.Group;
 import rc.bootsecurity.model.User;
 import rc.bootsecurity.model.UserTask;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,10 +17,12 @@ public class ApiController {
 
     private UserRepository userRepository;
     private TaskRepository taskRepository;
+    private GroupRepository groupRepository;
 
-    public ApiController(UserRepository userRepository, TaskRepository taskRepository) {
+    public ApiController(UserRepository userRepository, TaskRepository taskRepository, GroupRepository groupRepository) {
         this.userRepository = userRepository;
         this.taskRepository = taskRepository;
+        this.groupRepository = groupRepository;
     }
 
     @GetMapping("test1")
@@ -75,5 +75,16 @@ public class ApiController {
     public List<UserTask> taskById(@PathVariable long id) {
         List<UserTask> tasks = this.taskRepository.findAll();
         return tasks.stream().filter(x -> x.getId() == id).collect(Collectors.toList());
+    }
+
+    //GROUPS//
+    @GetMapping("groups")
+    public List<Group> allGroups() {
+        return groupRepository.findAll();
+    }
+
+    @RequestMapping(value = "groupsById/{id}", method = RequestMethod.GET)
+    public List<Group> groupsById(@PathVariable long id) {
+        return groupRepository.findAll().stream().filter(x -> x.getId() == id).collect(Collectors.toList());
     }
 }

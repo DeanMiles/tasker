@@ -6,6 +6,7 @@ import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "user")
@@ -30,6 +31,44 @@ public class User {
     private String tasks;
     private String roles = "";
     private String permissions = "";
+
+    public String getGroups() {
+        return groups;
+    }
+
+    public void addGroup(long id) {
+        if (groups != null) {
+            groups += ",";
+        }
+        groups += String.valueOf(id);
+    }
+
+    public List<Long> getGroupsList() {
+        if (groups.length() > 0) {
+            return Arrays.asList(groups.split(",")).stream().map(Long::parseLong).collect(Collectors.toList());
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public void deleteGroup(long id) {
+        List<Long> list = getGroupsList();
+        if (list.contains(id)) {
+            list.remove(id);
+            String string = "";
+            for (Long i : list) {
+                string += String.valueOf(id);
+                string += ",";
+            }
+            groups = string;
+        }
+    }
+
+    public void setGroups(String groups) {
+        this.groups = groups;
+    }
+
+    private String groups = "";
     private int active = 1;
 
     public void setUsername(String username) {

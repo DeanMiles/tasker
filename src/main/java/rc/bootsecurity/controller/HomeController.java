@@ -18,6 +18,11 @@ public class HomeController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @GetMapping("groups")
+    public String group(){
+        return "groups/index";
+    }
+
     @GetMapping("index")
     public String index() {
         return "index";
