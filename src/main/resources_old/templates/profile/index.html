@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments.html :: headerfiles"></head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+<!-- Page content goes here -->
+<div class="container">
+<!--    <p>This is User Profile\Index. Only authenticated people can see this</p>-->
+<!--    <table>-->
+<!--        <tr>-->
+<!--            <td>Username</td>-->
+<!--            <td><span sec:authentication="name"</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td>Authorities</td>-->
+<!--            <td><span sec:authentication="principal.authorities" </td>-->
+<!--        </tr>-->
+<!--    </table>-->
+
+    <form name="userNameForm" th:action="@{/profile/changeUserName}" method="post">
+        <fieldset>
+            <div class="form-group">
+                <label for="userName">Username</label>
+                <input type="text" class="form-control" id="userName" name="txt"
+                       placeholder="New user name">
+            </div>
+            <div class="form-actions" style="margin-top: 12px;">
+                <button type="submit" class="btn btn-success">Change login!</button>
+            </div>
+        </fieldset>
+    </form>
+    <form name="passwordForm" th:action="@{/profile/changePassword}" method="post">
+        <fieldset>
+            <div class="form-group">
+                <label for="OldPassword">Old password</label>
+                <input type="text" class="form-control" id="oldPassword" name="oldPassword"
+                       placeholder="Old password">
+            </div>
+            <div class="form-group">
+                <label for="NewPassword">New password</label>
+                <input type="text" class="form-control" id="newPassword" name="newPassword"
+                       placeholder="New password">
+            </div>
+            <div class="form-group">
+                <label for="newPassword2">Confirm new password</label>
+                <input type="text" class="form-control" id="newPassword2" name="newPassword2"
+                       placeholder="Confirm new password">
+            </div>
+            <div class="form-actions" style="margin-top: 12px;">
+                <button type="submit" class="btn btn-success">Change password!</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+</body>
+</html>

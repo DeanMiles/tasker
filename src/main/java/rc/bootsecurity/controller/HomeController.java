@@ -40,7 +40,7 @@ public class HomeController {
 
     @GetMapping("profile")
     public String profile() {
-        return "profile/index";
+        return "profile";
     }
 
     @GetMapping("register")

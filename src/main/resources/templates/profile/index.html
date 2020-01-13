@@ -1,56 +1,80 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:insert="fragments.html :: headerfiles"></head>
 <body>
-<header th:insert="fragments.html :: nav"></header>
-<!-- Page content goes here -->
-<div class="container">
-<!--    <p>This is User Profile\Index. Only authenticated people can see this</p>-->
-<!--    <table>-->
-<!--        <tr>-->
-<!--            <td>Username</td>-->
-<!--            <td><span sec:authentication="name"</td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td>Authorities</td>-->
-<!--            <td><span sec:authentication="principal.authorities" </td>-->
-<!--        </tr>-->
-<!--    </table>-->
 
-    <form name="userNameForm" th:action="@{/profile/changeUserName}" method="post">
-        <fieldset>
-            <div class="form-group">
-                <label for="userName">Username</label>
-                <input type="text" class="form-control" id="userName" name="txt"
-                       placeholder="New user name">
+<div class="d-flex" id="wrapper">
+    <div th:insert="fragments.html::sidebar"></div>
+    <div id="page-content-wrapper">
+        <div th:insert="fragments.html::navbar"></div>
+        <div class="row">
+            <div class="register-form">
+                <h4>Change username</h4>
+                <form>
+                    <label style="width:100px;">New username</label><input type="text" name="usernameInput" id="usernameInput" placeholder="new username" required><br>
+                    <label style="width:100px;">Password</label><input type="password" name="passwordInput" id="passwordInput" placeholder="password"><br>
+                    <label style="width:100px;">Confirm password</label><input type="password" name="passwordInput2" id="passwordInput2" required><br>
+                    <button ng-click="changeUsername()">Change username!</button>
+                </form>
             </div>
-            <div class="form-actions" style="margin-top: 12px;">
-                <button type="submit" class="btn btn-success">Change login!</button>
-            </div>
-        </fieldset>
-    </form>
-    <form name="passwordForm" th:action="@{/profile/changePassword}" method="post">
-        <fieldset>
-            <div class="form-group">
-                <label for="OldPassword">Old password</label>
-                <input type="text" class="form-control" id="oldPassword" name="oldPassword"
-                       placeholder="Old password">
-            </div>
-            <div class="form-group">
-                <label for="NewPassword">New password</label>
-                <input type="text" class="form-control" id="newPassword" name="newPassword"
-                       placeholder="New password">
-            </div>
-            <div class="form-group">
-                <label for="newPassword2">Confirm new password</label>
-                <input type="text" class="form-control" id="newPassword2" name="newPassword2"
-                       placeholder="Confirm new password">
-            </div>
-            <div class="form-actions" style="margin-top: 12px;">
-                <button type="submit" class="btn btn-success">Change password!</button>
-            </div>
-        </fieldset>
-    </form>
+<!--            <div class="register-form">-->
+<!--                <h4>Change password</h4>-->
+<!--                <form>-->
+<!--                    <label style="width:100px;">Old password</label><input type="password" name="oldpasswordInput" id="oldpasswordInput" placeholder="Old password" required><br>-->
+<!--                    <label style="width:100px;">New password</label><input type="password" name="newpasswordInput" id="newpasswordInput" placeholder="New password"><br>-->
+<!--                    <label style="width:100px;">Confirm new password</label><input type="password" name="newpasswordInput2" id="newpasswordInput2" required><br>-->
+<!--                    <button class="btn btn-success" ng-click="vm.changePassword()">Change password!</button>-->
+<!--                </form>-->
+<!--            </div>-->
+        </div>
+
+<!--        <div class="row">-->
+<!--            <div class="register-form">-->
+<!--                <h4>Change username</h4>-->
+<!--                <form name="userNameForm" th:action="@{/profile/changeUserName}" method="post">-->
+<!--                    <fieldset>-->
+<!--                        <div class="form-group">-->
+<!--                            <input type="text" class="form-control" id="userName" name="txt"-->
+<!--                                   placeholder="New user name">-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <button type="submit" class="btn btn-success">Change login!</button>-->
+<!--                        </div>-->
+<!--                    </fieldset>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--            <div class="register-form">-->
+<!--                <h4>Change password</h4>-->
+<!--                <form name="passwordForm" th:action="@{/profile/changePassword}" method="post">-->
+<!--                    <fieldset>-->
+<!--                        <div class="form-group">-->
+<!--                            <input type="text" class="form-control" id="oldPassword" name="oldPassword"-->
+<!--                                   placeholder="Old password">-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <input type="text" class="form-control" id="newPassword" name="newPassword"-->
+<!--                                   placeholder="New password">-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <input type="text" class="form-control" id="newPassword2" name="newPassword2"-->
+<!--                                   placeholder="Confirm new password">-->
+<!--                        </div>-->
+<!--                        <div class="form-actions" style="margin-top: 12px;">-->
+<!--                            <button type="submit" class="btn btn-success">Change password!</button>-->
+<!--                        </div>-->
+<!--                    </fieldset>-->
+<!--                </form>-->
+<!--            </div>-->
+        </div>
+    </div>
 </div>
+
+<div th:insert="fragments.html::togglemenu"></div>
+
 </body>
 </html>
+<script>
+    function changeUsername(){
+        console.log("XD");
+    }
+</script>

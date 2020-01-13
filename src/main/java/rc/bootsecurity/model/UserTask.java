@@ -22,12 +22,10 @@ public class UserTask {
         return ownerIds;
     }
 
-    //    @Column(name = "Owners' ids")
     private String ownerIds;
-//    @Column(name = "StartDate")
     private LocalDate startDate;
-//    @Column(name = "EndDate")
     private LocalDate endDate;
+    private String desc;
 
     public long getId() {
         return id;
@@ -78,13 +76,6 @@ public class UserTask {
         this.isDone = isDone;
     }
 
-    public UserTask(String taskName, String ownerIds, LocalDate startDate, LocalDate endDate) {
-        this.taskName = taskName;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.ownerIds = ownerIds;
-    }
-
     protected UserTask() {
 
     }
@@ -98,15 +89,8 @@ public class UserTask {
 
     public void deleteOwner(long id) {
         List<Long> list = getOwnersList();
-        if (list.contains(id)) {
-            list.remove(id);
-            String string = "";
-            for (Long i : list) {
-                string += String.valueOf(id);
-                string += ",";
-            }
-            ownerIds = string;
-        }
+        list = list.stream().filter(f -> f != id).collect(Collectors.toList());
+        ownerIds = list.toString().substring(1, list.toString().length()-1).replace(" ", "");
     }
 
     public UserTask(String taskName, String ownerIds) {
@@ -114,6 +98,23 @@ public class UserTask {
         this.ownerIds = ownerIds;
         this.startDate = LocalDate.now();
         this.endDate = LocalDate.now();
+        this.desc = "brak";
+    }
+
+    public UserTask(String taskName, String ownerIds, String desc) {
+        this.taskName = taskName;
+        this.ownerIds = ownerIds;
+        this.startDate = LocalDate.now();
+        this.endDate = LocalDate.now();
+        this.desc = desc;
+    }
+
+    public UserTask(String taskName, String ownerIds, String desc, LocalDate localDate) {
+        this.taskName = taskName;
+        this.ownerIds = ownerIds;
+        this.startDate = LocalDate.now();
+        this.endDate = localDate;
+        this.desc = desc;
     }
 
     private boolean isDone = false;

@@ -5,59 +5,89 @@
 <head th:fragment="headerfiles">
     <title>Tasker</title>
     <meta charset="UTF-8"/>
-    <link th:href="@{~/bootstrap.min.css}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{~/bootstrap/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{~/fontawesome/css/all.css}" rel="stylesheet">
+    <link th:href="@{~/tasker.css}" rel="stylesheet">
     <script type="text/javascript" src="/static/angular.min.js" th:src="@{/angular.min.js}"></script>
     <script type="text/javascript" src="/static/app/app.module.js" th:src="@{/app/app.module.js}"></script>
     <script type="text/javascript" src="/static/app/task.controller.js" th:src="@{/app/task.controller.js}"></script>
     <script type="text/javascript" src="/static/app/group.controller.js" th:src="@{/app/group.controller.js}"></script>
 </head>
 <body>
-<!-- Fragment #2 : Navbar contains nav links -->
-<div th:fragment="nav">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" th:href="@{index}">Tasker</a>
+
+<div th:fragment="sidebar">
+    <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">Tasker</div>
+        <div class="list-group list-group-flush">
+            <a sec:authorize="isAuthenticated()" href="#" th:href="@{index}"
+               class="list-group-item list-group-item-action bg-light">Home</a>
+            <a sec:authorize="isAuthenticated()" href="#" th:href="@{~/tasks}"
+               class="list-group-item list-group-item-action bg-light">Tasks</a>
+            <a sec:authorize="isAuthenticated()" href="#" th:href="@{~/profile}"
+               class="list-group-item list-group-item-action bg-light">Profile</a>
+            <a sec:authorize="isAuthenticated()" href="#" th:href="@{~/groups}"
+               class="list-group-item list-group-item-action bg-light">Groups</a>
+            <a sec:authorize="isAnonymous()" href="#" th:href="@{~/login}"
+               class="list-group-item list-group-item-action bg-light">Click here to log in</a>
+            <a sec:authorize="isAnonymous()" href="#" th:href="@{~/register}"
+               class="list-group-item list-group-item-action bg-light">Click here to register</a>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{~/index}"><i class="fa fa-home"></i>Home</a>
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+
+
+                <li class="nav-item active" sec:authorize="isAuthenticated()">
+                    <span class="nav-link">Signed as [[${#httpServletRequest.remoteUser}]]</span>
                 </li>
-                <li sec:authorize="isAuthenticated()" class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{~/tasks}">Tasks</a>
-                </li>
-                <li sec:authorize="isAuthenticated()" class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{~/profile}">Profile</a>
-                </li>
-                <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{~/admin/index}">Admin</a>
-                </li>
-                <li sec:authorize="isAuthenticated()" class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{~/groups}">Groups</a>
-                </li>
-            </ul>
-<!--            <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}">-->
-<!--                <button sec:authorize="isAuthenticated()" th:href="@{/logout}" form-method="post" class="btn btn-outline-danger my-2 my-sm-0 btn-sm" type="submit">Logout</button>-->
-<!--                <button sec:authorize="isAnonymous()" th:href="@{~/login}" form-method="get" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">Login</button>-->
-<!--                <button sec:authorize="isAnonymous()" th:href="@{~/register}" form-method="get" class="btn btn-outline-info ny-2 my-sm-0 btn-sm" type="submit">Register</button>-->
-<!--            </form>-->
-            <ul class="navbar-nav navbar-right">
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <span>Signed as [[${#httpServletRequest.remoteUser}]]</span>
-                </li>
-                <li class="nav-item" sec:authorize="isAnonymous()">
-                    <a class="btn btn-outline-info my-2 my-sm-0 btn-sm" href="#" th:href="@{~/login}">Login</a>
-                </li>
-                <li class="nav-item" sec:authorize="isAnonymous()">
-                    <a class="btn btn-outline-info my-2 my-sm-0 btn-sm" href="#" th:href="@{~/register}">Register</a>
-                </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="btn btn-outline-danger my-2 my-sm-0 btn-sm" href="#" th:href="@{~/logout}">Logout</a>
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Account
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" th:href="@{~/profile}">Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" th:href="@{~/logout}">Logout</a>
+                    </div>
                 </li>
 
+
+                <li class="nav-item active" sec:authorize="isAnonymous()">
+                    <a class="nav-link" href="#" th:href="@{~/login}">Log in</a>
+                </li>
+                <li class="nav-item active" sec:authorize="isAnonymous()">
+                    <a class="nav-link" href="#" th:href="@{~/register}">Register</a>
+                </li>
             </ul>
         </div>
     </nav>
 </div>
+
+<div th:fragment="togglemenu">
+    <script type="text/javascript" src="/static/jquery/jquery.min.js" th:src="@{~/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" src="/static/bootstrap/bootstrap.bundle.min.js"
+            th:src="@{~/bootstrap/bootstrap.bundle.js}"></script>
+
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+</div>
+
 </body>
 </html>

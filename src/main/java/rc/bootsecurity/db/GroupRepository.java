@@ -7,4 +7,5 @@ import rc.bootsecurity.model.Group;
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long> {
     Group findById(long id);
+    Group findByGroupName(String name);
 }

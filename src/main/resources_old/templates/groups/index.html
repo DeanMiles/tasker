@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles">
+</head>
+<body ng-app="app" ng-controller="GroupController as vm">
+<header th:insert="fragments.html :: nav">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Groups</a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div>
+    <div class="row">
+        <div class="col-lg-offset-2 col-lg-8">
+            <!-- Get all bookings or only affordable ones -->
+            <div class="btn-group" role="group">
+                <button ng-click="vm.getAll()" type="button" class="btn btn-default">All</button>
+                <!--                <button ng-click="vm.getDone()" type="button" class="btn btn-default">Done</button>-->
+                <!--                <button ng-click="vm.getUnDone()" type="button" class="btn btn-default">Undone</button>-->
+            </div>
+
+            <!-- Display bookings in a table -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Owners</th>
+                    <th>Tasks</th>
+                    <th style="width: 90px"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="group in vm.groups">
+                    <td>{{group.groupName}}</td>
+                    <td>{{group.id}}</td>
+                    <td>{{group.participants}}</td>
+                    <td>{{group.tasks}}</td>
+                    <!--                    <td>-->
+                    <!--                        <button class="btn btn-danger" ng-click="vm.toggledone(task.id)">Toggle</button>-->
+                    <!--                    </td>-->
+                    <!--                    <td>-->
+                    <!--                        <button class="btn btn-danger" ng-click="vm.deleteTask(task.id)">Delete</button>-->
+                    <!--                    </td>-->
+                    <!--                    <td>-->
+                    <!--                        <button class="btn btn-danger" ng-click="vm.deleteTask(task.id)">Delete</button>-->
+                    <!--                    </td>-->
+                </tr>
+                </tbody>
+            </table>
+            <!--            <form name="newTask" th:action="@{/tasks/newtask}" method="post">-->
+            <!--                <fieldset>-->
+            <!--                    <div class="form-group">-->
+            <!--                        <label for="title">Title</label>-->
+            <!--                        <input type="text" class="form-control" id="title" name="title"-->
+            <!--                               placeholder="Title">-->
+            <!--                    </div>-->
+            <!--&lt;!&ndash;                    <div class="form-group">&ndash;&gt;-->
+            <!--&lt;!&ndash;                        <label for="NewPassword">New password</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;                        <input type="text" class="form-control" id="newPassword" name="newPassword"&ndash;&gt;-->
+            <!--&lt;!&ndash;                               placeholder="New password">&ndash;&gt;-->
+            <!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+            <!--&lt;!&ndash;                    <div class="form-group">&ndash;&gt;-->
+            <!--&lt;!&ndash;                        <label for="newPassword2">Confirm new password</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;                        <input type="text" class="form-control" id="newPassword2" name="newPassword2"&ndash;&gt;-->
+            <!--&lt;!&ndash;                               placeholder="Confirm new password">&ndash;&gt;-->
+            <!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+            <!--                    <div class="form-actions" style="margin-top: 12px;">-->
+            <!--                        <button type="submit" class="btn btn-success">Add task!</button>-->
+            <!--                    </div>-->
+            <!--                </fieldset>-->
+            <!--            </form>-->
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

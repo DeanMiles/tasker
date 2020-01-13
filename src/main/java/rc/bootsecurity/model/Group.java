@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "groups")
+@Table(name = "Groups")
 public class Group{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String participants;
+    private String participants = "";
     private String tasks;
 
     public String getParticipants() {
@@ -45,10 +45,9 @@ public class Group{
     }
 
     public void addTask(long id) {
-        if (tasks != null) {
-            tasks += ",";
-        }
-        tasks += String.valueOf(id);
+        List<Long> list = getTaskList();
+        list.add(id);
+        tasks = list.toString().substring(1, list.toString().length() - 1).replace(" ", "");
     }
 
     public String getTasks() {
@@ -56,36 +55,21 @@ public class Group{
     }
 
     public void addParticipant(long id) {
-        if (participants != null) {
-            participants += ",";
-        }
-        participants += String.valueOf(id);
+        List<Long> list = getParticipantsList();
+        list.add(id);
+        participants = list.toString().substring(1, list.toString().length() - 1).replace(" ", "");
     }
 
     public void deleteParticipant(long id) {
         List<Long> list = getParticipantsList();
-        if (list.contains(id)) {
-            list.remove(id);
-            String string = "";
-            for (Long i : list) {
-                string += String.valueOf(id);
-                string += ",";
-            }
-            participants = string;
-        }
+        list = list.stream().filter(f -> f != id).collect(Collectors.toList());
+        participants = list.toString().substring(1, list.toString().length()-1).replace(" ", "");
     }
 
     public void deleteTask(long id) {
         List<Long> list = getTaskList();
-        if (list.contains(id)) {
-            list.remove(id);
-            String string = "";
-            for (Long i : list) {
-                string += String.valueOf(id);
-                string += ",";
-            }
-            tasks = string;
-        }
+        list = list.stream().filter(f -> f != id).collect(Collectors.toList());
+        tasks = list.toString().substring(1, list.toString().length()-1).replace(" ", "");
     }
 
     public boolean isParticipant(Long id) {
@@ -104,6 +88,8 @@ public class Group{
     }
     public Group(String groupName) {
         this.groupName = groupName;
+        this.participants = new String();
+        this.tasks = new String();
     }
 
     public Group(String groupName, String participants) {

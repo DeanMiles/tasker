@@ -3,28 +3,33 @@
 <head th:insert="fragments.html :: headerfiles">
 </head>
 <body ng-app="app" ng-controller="TaskController as vm">
-<header th:insert="fragments.html :: nav">
-    <nav class="navbar navbar-default">
+
+<div class="d-flex" id="wrapper">
+    <div th:insert="fragments.html::sidebar"></div>
+    <div id="page-content-wrapper">
+        <div th:insert="fragments.html::navbar"></div>
+
         <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Tasks</a>
-            </div>
-        </div>
-    </nav>
-</header>
 
-<div>
-    <div class="row">
-        <div class="col-lg-offset-2 col-lg-8">
-            <!-- Get all bookings or only affordable ones -->
-            <div class="btn-group" role="group">
-                <button ng-click="vm.getAll()" type="button" class="btn btn-default">All</button>
-                <button ng-click="vm.getDone()" type="button" class="btn btn-default">Done</button>
-                <button ng-click="vm.getUnDone()" type="button" class="btn btn-default">Undone</button>
+            <div class="btn-group" role="group" id="taskButtons">
+                <button ng-click="vm.setDone(0)" type="button" class="btn" id="getBothdonebtn">All</button>
+                <button ng-click="vm.setDone(1)" type="button" class="btn" id="getDonebtn">Done</button>
+                <button ng-click="vm.setDone(2)" type="button" class="btn" id="getUndonebtn">Undone</button>
+            </div>
+            <div class="btn-group" role="group" id="taskButtons2">
+                <button ng-click="vm.setTime(0)" type="button" class="btn" id="getAlltimebtn">All</button>
+                <button ng-click="vm.setTime(1)" type="button" class="btn" id="getWeekbtn">This week</button>
+                <button ng-click="vm.setTime(2)" type="button" class="btn" id="getMonthbtn">This month</button>
+                <button ng-click="vm.setTime(3)" type="button" class="btn" id="getYearbtn">This year</button>
+            </div>
+            <div class="btn-group" role="group" id="taskButtons3">
+                <button ng-click="vm.setGroup(0)" type="button" class="btn" id="getAlltasksbtn">All</button>
+                <button ng-click="vm.setGroup(1)" type="button" class="btn" id="getMytasksbtn">My</button>
+                <button ng-click="vm.setGroup(2)" type="button" class="btn" id="getGrouptasksbtn">Group</button>
             </div>
 
-            <!-- Display bookings in a table -->
-            <table class="table">
+
+            <table id="tableTasks" class="table-responsive-md table-bordered table-striped" width="100%">
                 <thead>
                 <tr>
                     <th>Title</th>
@@ -33,7 +38,8 @@
                     <th>End</th>
                     <th>Done?</th>
                     <th>Owners</th>
-                    <th style="width: 90px"></th>
+                    <th style="width: 90px">Toggle</th>
+                    <th style="width: 90px">Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,44 +49,85 @@
                     <td>{{task.startDate}}</td>
                     <td>{{task.endDate}}</td>
                     <td>{{task.isDone}}</td>
-                    <td>{{task.ownerIds}}</td>
+                    <td>{{vm.test(task.ownerIds)}}</td>
                     <td>
-                        <button class="btn btn-danger" ng-click="vm.toggledone(task.id)">Toggle</button>
+                        <button class="btn btn-outline-success" ng-click="vm.toggle(task.id)">Toggle</button>
                     </td>
                     <td>
-                        <button class="btn btn-danger" ng-click="vm.deleteTask(task.id)">Delete</button>
+                        <button class="btn btn-outline-danger" ng-click="vm.deleteTask(task.id)">Delete</button>
                     </td>
-<!--                    <td>-->
-<!--                        <button class="btn btn-danger" ng-click="vm.deleteTask(task.id)">Delete</button>-->
-<!--                    </td>-->
                 </tr>
                 </tbody>
             </table>
-            <form name="newTask" th:action="@{/tasks/newtask}" method="post">
-                <fieldset>
-                    <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" class="form-control" id="title" name="title"
-                               placeholder="Title">
-                    </div>
-<!--                    <div class="form-group">-->
-<!--                        <label for="NewPassword">New password</label>-->
-<!--                        <input type="text" class="form-control" id="newPassword" name="newPassword"-->
-<!--                               placeholder="New password">-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="newPassword2">Confirm new password</label>-->
-<!--                        <input type="text" class="form-control" id="newPassword2" name="newPassword2"-->
-<!--                               placeholder="Confirm new password">-->
-<!--                    </div>-->
-                    <div class="form-actions" style="margin-top: 12px;">
-                        <button type="submit" class="btn btn-success">Add task!</button>
-                    </div>
-                </fieldset>
-            </form>
 
+            <div id="formTask">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h4>Add new Task</h4>
+                    </div>
+
+
+                    <div>
+                        <form>
+                            <label style="width:100px;">Title</label><input type="text" name="titleInput" id="titleInput" placeholder="title" required><br>
+<!--                            <label style="width:100px;">Description</label><input type="text" name="descInput" id="descInput" placeholder="description"><br>-->
+                            <label style="width:100px;">Deadline</label><input type="date" name="endDate" id="endDate" required><br>
+                            <button class="btn btn-success btn-lg btn-block" ng-click="vm.addTask()">Add task!</button>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+            <div id="formTask2">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h4>Add owner to task</h4>
+                    </div>
+
+
+                    <div>
+                        <form>
+                            <label style="width:100px;">Title</label>
+                            <select id="newOwnerselect">
+                            <option ng-repeat="task in vm.tasks" value="{{task.id}}">{{task.taskName}}</option>
+                        </select> <br>
+                            <label style="width:100px;">User name</label><input type="text" id="newOwnerName" placeholder="New owner name"><br>
+                            <button class="btn btn-success btn-lg btn-block" ng-click="vm.addOwner()">Add owner!</button>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+            <div id="formTask3">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h4>Delete owner from task</h4>
+                    </div>
+
+
+                    <div>
+                        <form>
+                            <label style="width:100px;">Title</label>
+                            <select ng-change="vm.getOwners()" ng-model="myValue" id="deleteOwnerTaskselect">
+                                <option ng-repeat="task in vm.tasks" ng-value="{{task.id}}">{{task.taskName}}</option>
+                            </select> <br>
+                            <label style="width:100px;">Owner to delete</label>
+                            <select id="deleteOwnerselect">
+                                <option ng-repeat="owner in vm.owners">{{owner}}</option>
+                            </select> <br>
+                            <button class="btn btn-success btn-lg btn-block" ng-click="vm.deleteOwner()">Delete owner!</button>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<div th:insert="fragments.html::togglemenu"></div>
+
 </body>
 </html>

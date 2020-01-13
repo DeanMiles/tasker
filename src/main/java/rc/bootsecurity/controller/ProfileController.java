@@ -19,30 +19,50 @@ public class ProfileController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("changeUserName")
-    public String changeUserName(@RequestParam String txt) {
+    @PostMapping("changeUsername")
+    public String changeUsername(@RequestParam String newUsername, @RequestParam String password1, @RequestParam String password2) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByUsername(authentication.getName());
-        User check = this.userRepository.findByUsername(txt);
-        if (user != null && check == null) {
-            user.setUsername(txt);
-            this.userRepository.save(user);
-            return "succeed";
+        User check = userRepository.findByUsername(newUsername);
+        if (user != null) {
+            if (check == null) {
+                if (password1.equalsIgnoreCase(password2)) {
+                    if (passwordEncoder.matches(password1, user.getPassword())) {
+                        user.setUsername(newUsername);
+                        userRepository.save(user);
+                        return "Succeed!";
+                    } else {
+                        return "Incorrect password.";
+                    }
+                } else {
+                    return "Those two passwords are not equal.";
+                }
+            } else {
+                return "This username is already taken.";
+            }
         } else {
-            return "failure";
+            return "You are not logged in.";
         }
     }
 
     @PostMapping("changePassword")
-    public String changePassword(@RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String newPassword2) {
+    public String changePassword(@RequestParam String oldPassword, @RequestParam String newPassword1, @RequestParam String newPassword2) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByUsername(authentication.getName());
-        if (user != null && newPassword.equalsIgnoreCase(newPassword2) && passwordEncoder.matches(oldPassword, user.getPassword())) {
-            user.setPassword(passwordEncoder.encode(newPassword));
-            this.userRepository.save(user);
-            return "succeed";
+        if (user != null) {
+            if (passwordEncoder.matches(oldPassword, user.getPassword())) {
+                if (newPassword1.equalsIgnoreCase(newPassword2)) {
+                    user.setPassword(passwordEncoder.encode(newPassword1));
+                    userRepository.save(user);
+                    return "Succeed!";
+                } else {
+                    return "Those two passwords are not equal.";
+                }
+            } else {
+                return "Incorrect password.";
+            }
         } else {
-            return "failure";
+            return "You are not logged in.";
         }
     }
 }

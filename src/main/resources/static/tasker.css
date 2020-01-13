@@ -1,0 +1,196 @@
+body {
+    overflow-x: hidden;
+    background: #eef4f9;
+}
+
+#menu-toggle{
+    background-color: #c5cbd0;
+    color: #636363;
+}
+
+#sidebar-wrapper {
+    min-height: 100vh;
+    margin-left: -15rem;
+    -webkit-transition: margin .25s ease-out;
+    -moz-transition: margin .25s ease-out;
+    -o-transition: margin .25s ease-out;
+    transition: margin .25s ease-out;
+    background-color: black;
+}
+
+#sidebar-wrapper .sidebar-heading {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+    width: 15rem;
+}
+
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+}
+
+.btn{
+    margin-top: 10px;
+    background-color: #c5cbd0;
+    color: #636363;;
+}
+
+#tableTasks {
+    margin: 20px 0 auto;
+    max-width: 1200px;
+}
+
+tr{
+    text-align: center;
+}
+
+td{
+    min-width: 60px;
+}
+
+#formTask {
+    margin-top: 20px;
+    max-width: 600px;
+    background-color: #c5cbd0;
+}
+
+#formTask h4 {
+    color: #636363;
+    margin: 0 0 15px;
+    position: relative;
+    text-align: center;
+}
+
+#formTask h4:before {
+    left: 0;
+}
+
+#formTask h4:after {
+    right: 0;
+}
+
+#formTask h4:after, #formTask h4:before {
+    content: "";
+    height: 2px;
+    width: 30%;
+    background: #b0b0b0;
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+}
+
+.register-form {
+    width: 400px;
+    margin: 200px auto;
+    padding: 40px 15px;
+    background-color: #f2f3f7;
+}
+
+.register-form h4 {
+    color: #7e7e7e;
+    margin: 0 0 15px;
+    position: relative;
+    text-align: center;
+}
+
+.register-form h4:before, .register-form h4:after {
+    content: "";
+    height: 2px;
+    width: 15%;
+    background: #d4d4d4;
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+}
+
+.register-form h4:before {
+    left: 0;
+}
+
+.register-form h4:after {
+    right: 0;
+}
+
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+        margin-left: 0;
+    }
+
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: -15rem;
+    }
+
+}
+
+@media (max-width: 768px) {
+    #formTask h4:after, #formTask h4:before {
+        width: 20%;
+    }
+}
+
+/* Register form */
+
+.register-form {
+    width: 400px;
+    margin: 200px auto;
+    padding: 40px 15px;
+    background-color: #f2f3f7;
+}
+
+.register-form h2 {
+    color: #7e7e7e;
+    margin: 0 0 15px;
+    position: relative;
+    text-align: center;
+}
+
+.register-form h2:before, .register-form h2:after {
+    content: "";
+    height: 2px;
+    width: 30%;
+    background: #d4d4d4;
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+}
+
+.register-form h2:before {
+    left: 0;
+}
+
+.register-form h2:after {
+    right: 0;
+}
+
+.register-form .form-control {
+    height: 40px;
+    box-shadow: none;
+    color: #969fa4;
+}
+
+.register-form .form-control:focus {
+    border-radius: 3px;
+    border-color: #1e7e34;
+}
+
+.register-form a {
+    color: yellowgreen;
+}
+
+@media (max-width: 768px) {
+    .register-form {
+        margin: 100px auto;
+        padding: 40px 15px;
+    }
+}

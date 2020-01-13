@@ -32,7 +32,7 @@ public class DbInit implements CommandLineRunner {
         taskRepository.deleteAll();
         groupRepository.deleteAll();
 
-        User dan = new User("dupa", passwordEncoder.encode("dupa"), "USER", "");
+        User dan = new User("karolek", passwordEncoder.encode("karolek"), "USER", "");
         User admin = new User("admin", passwordEncoder.encode("admin"), "ADMIN", "");
         User manager = new User("manager", passwordEncoder.encode("manager"), "MANAGER", "");
         admin.addGroup(7);
@@ -40,9 +40,9 @@ public class DbInit implements CommandLineRunner {
         admin.addGroup(9);
         List<User> users = Arrays.asList(dan, admin, manager);
 
-        UserTask task0 = new UserTask("Task0", "0", LocalDate.now(),LocalDate.now());
-        UserTask task1 = new UserTask("Task1", "1", LocalDate.now(),LocalDate.now());
-        UserTask task2 = new UserTask("Task2", "2", LocalDate.now(),LocalDate.now());
+        UserTask task0 = new UserTask("Task0", "0", "brak",LocalDate.now());
+        UserTask task1 = new UserTask("Task1", "1", "brak",LocalDate.now());
+        UserTask task2 = new UserTask("Task2", "2", "brak",LocalDate.now());
         List<UserTask> tasks = Arrays.asList(task0, task1, task2);
 
         Group group0 = new Group("group0", "2", "4,5,6");

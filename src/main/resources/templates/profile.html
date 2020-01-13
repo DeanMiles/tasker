@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles">
+</head>
+<body>
+<div class="d-flex" id="wrapper">
+    <div th:insert="fragments.html::sidebar"></div>
+    <div id="page-content-wrapper">
+        <div th:insert="fragments.html::navbar"></div>
+        <div class="row">
+            <div class="register-form">
+                <h4>Change username</h4>
+                <form>
+                    <label style="width:100px;">New username</label><input type="text" name="usernameInput" id="usernameInput" placeholder="new username" required><br>
+                    <label style="width:100px;">Password</label><input type="password" name="passwordInput" id="passwordInput" placeholder="password"><br>
+                    <label style="width:100px;">Confirm password</label><input type="password" name="passwordInput2" id="passwordInput2" required><br>
+                    <button class="btn btn-success btn-lg btn-block" onclick="changeUsername()">Change username!</button>
+                </form>
+            </div>
+            <div class="register-form">
+                <h4>Change password</h4>
+                <form>
+                    <label style="width:100px;">Old password</label><input type="password" id="oldPassword" placeholder="Old password" required><br>
+                    <label style="width:100px;">New password</label><input type="password" id="newPassword1" placeholder="New password"><br>
+                    <label style="width:100px;">Confirm new password</label><input type="password" id="newPassword2" required><br>
+                    <button class="btn btn-success btn-lg btn-block" onclick="changePassword()">Change password!</button>
+                </form>
+            </div>
+    </div>
+</div>
+
+<script>
+    function changeUsername() {
+        var newUsername = document.getElementById("usernameInput").value;
+        var password = document.getElementById("passwordInput").value;
+        var password2 = document.getElementById("passwordInput2").value;
+        var data = new FormData();
+        data.append('newUsername', newUsername);
+        data.append('password1', password);
+        data.append('password2', password2);
+        var url = "https://localhost:8443/profile/changeUsername";
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "POST", url, false ); // false for synchronous request
+        xmlHttp.send(data);
+        alert(xmlHttp.responseText);
+    }
+
+    function changePassword() {
+        var data = new FormData();
+        data.append('oldPassword', document.getElementById('oldPassword').value);
+        data.append('newPassword1', document.getElementById('newPassword1').value);
+        data.append('newPassword2', document.getElementById('newPassword2').value);
+        var url = "https://localhost:8443/profile/changePassword";
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("POST", url, false);
+        xmlHttp.send(data);
+        alert(xmlHttp.response);
+    }
+</script>
+<div th:insert="fragments.html::togglemenu"></div>
+</body>
+</html>
